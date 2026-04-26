@@ -4,11 +4,22 @@ import { createContext, useContext, useState } from 'react';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  // load user from localStorage on first render
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem('ll_user');
+    return saved ? JSON.parse(saved) : null;
+  });
 
-  // now accepts name and role too
-  const signIn = (email, name, role) => setUser({ email, name, role });
-  const signOut = () => setUser(null);
+  const signIn = (email, name, role) => {
+    const userData = { email, name, role };
+    localStorage.setItem('ll_user', JSON.stringify(userData)); // save to localStorage
+    setUser(userData);
+  };
+
+  const signOut = () => {
+    localStorage.removeItem('ll_user'); // clear from localStorage
+    setUser(null);
+  };
 
   return (
     <AuthContext.Provider value={{ user, signIn, signOut }}>

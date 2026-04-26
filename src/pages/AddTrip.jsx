@@ -37,8 +37,8 @@ export default function AddTrip() {
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
           <a href="/dashboard" className="hover:text-emerald-600">Dashboard</a>
           <a href="#" className="text-emerald-600 font-semibold">My trips</a>
-          <a href="#" className="hover:text-emerald-600">Requests</a>
-          <a href="#" className="hover:text-emerald-600">Messages</a>
+          <a onClick={() => navigate('/requests')} className="cursor-pointer hover:text-emerald-600">Requests</a>
+          <a onClick={() => navigate('/messages')} className="cursor-pointer hover:text-emerald-600">Messages</a>
         </div>
         <div className="flex items-center gap-3">
           <button

@@ -1,8 +1,8 @@
 // src/pages/MyTrips.jsx
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Calendar, Package } from 'lucide-react';
+import { Plane,Calendar, Package } from 'lucide-react';
 
 const mockTrips = [
   {
@@ -15,7 +15,7 @@ const mockTrips = [
     requests: 2,
     pickup: 'Dubai airport',
     dropoff: 'Dhaka city',
-    visibility: 'Live to senders',
+    visibility: 'Live',
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const mockTrips = [
     status: 'paused',
     requests: 0,
     pickup: 'Bangladesh to Malaysia',
-    dropoff: 'Hidden from new requests',
+    dropoff: 'Paused',
     visibility: 'Resume when ready',
   },
 ];
@@ -53,17 +53,17 @@ export default function MyTrips() {
 
       {/* Navbar */}
       <nav className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-            <span className="text-white text-xs font-bold">LL</span>
+            <Plane className="text-white w-4 h-4" />
           </div>
           <span className="font-bold text-xl text-slate-900">LuggageLinker</span>
-        </div>
+        </Link>
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
           <a href="/dashboard" className="hover:text-emerald-600">Dashboard</a>
           <span className="text-emerald-600 font-semibold">My trips</span>
-          <a href="#" className="hover:text-emerald-600">Requests</a>
-          <a href="#" className="hover:text-emerald-600">Messages</a>
+          <a onClick={() => navigate('/requests')} className="cursor-pointer hover:text-emerald-600">Requests</a>
+          <a onClick={() => navigate('/messages')} className="cursor-pointer hover:text-emerald-600">Messages</a>
         </div>
         <div className="flex items-center gap-3">
           <button

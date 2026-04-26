@@ -1,67 +1,85 @@
 // src/components/SenderDashboard.jsx
 import { useAuth } from '../context/AuthContext';
 import { Shield, Search, MessageSquare, FileText } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Plane } from 'lucide-react';
 
 export default function SenderDashboard({ user }) {
   const { signOut } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-slate-50">
 
-      {/* Dashboard Navbar */}
+      {/* Navbar */}
       <nav className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-  
-      {/* Left — Logo */}
-      <span className="font-bold text-xl text-slate-900">LuggageLinker</span>
-
-      {/* Center — Nav links */}
-      <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-        <a href="#" className="text-emerald-600 font-semibold">Dashboard</a>
-        <a href="#" className="hover:text-emerald-600">My Requests</a>
-        <a href="#" className="hover:text-emerald-600">Find a Traveler</a>
-        <a href="#" className="hover:text-emerald-600">Messages</a>
-      </div>
-
-      {/* Right — Actions */}
-      <div className="flex items-center gap-3">
-        <button className="px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition">
-          Send new request
-        </button>
-        <div className="flex items-center gap-2 cursor-pointer" onClick={signOut}>
-          <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700 font-semibold text-sm">
-            {user.name?.[0]?.toUpperCase() || 'S'}
+        <Link to="/" className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+            <Plane className="text-white w-4 h-4" />
           </div>
-          <span className="text-sm font-medium text-slate-700">{user.name}</span>
-        </div>
-      </div>
+          <span className="font-bold text-xl text-slate-900">LuggageLinker</span>
+        </Link>
 
-    </nav>
+        {/* Center — Nav links */}
+        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+          <a onClick={() => navigate('/dashboard')} className="cursor-pointer text-emerald-600 font-semibold">Dashboard</a>
+          <a onClick={() => navigate('/my-requests')} className="cursor-pointer hover:text-emerald-600">My Requests</a>
+          <a onClick={() => navigate('/find-traveler')} className="cursor-pointer hover:text-emerald-600">Find travelers</a>
+          <a onClick={() => navigate('/messages')} className="cursor-pointer hover:text-emerald-600">Messages</a>
+        </div>
+
+        {/* Right — Actions */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate('/find-traveler')}
+            className="px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition">
+            Send new request
+          </button>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={signOut}>
+            <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700 font-semibold text-sm">
+              {user.name?.[0]?.toUpperCase() || 'S'}
+            </div>
+            <span className="text-sm font-medium text-slate-700">{user.name} · Sender</span>
+          </div>
+        </div>
+      </nav>
 
       <div className="max-w-5xl mx-auto px-6 py-8 space-y-6">
 
-       {/* Welcome banner */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6">
-        
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          
-          {/* Left: Welcome text */}
-          <h1 className="text-2xl font-bold text-slate-900">
-            Welcome back, {user.name} 👋
-          </h1>
-
-          {/* Right: Buttons */}
-          <div className="flex gap-2">
-            <button className="px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition">
-              Find trusted travelers
-            </button>
-            <button className="px-4 py-2 border border-slate-200 text-sm font-semibold rounded-lg hover:bg-slate-50 transition">
-              Go to messages
-            </button>
+        {/* Welcome banner */}
+        <div className="bg-white border border-slate-200 rounded-2xl p-6">
+          <div className="flex items-center gap-2 text-emerald-700 text-xs font-medium mb-3">
+            <Shield className="w-4 h-4" /> Sender dashboard
           </div>
-
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900 mb-2">Welcome back, {user.name} 👋</h1>
+              <p className="text-sm text-slate-500 mb-3">
+                Track delivery requests, continue conversations with travelers, and quickly start a new package request from here.
+              </p>
+              <div className="flex gap-2">
+                <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                  ✓ Profile verified
+                </span>
+                <span className="inline-flex items-center gap-1 text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                  Primary route: Dubai to Bangladesh
+                </span>
+              </div>
+            </div>
+            <div className="flex gap-2 flex-shrink-0">
+              <button
+                onClick={() => navigate('/find-traveler')}
+                className="px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition">
+                Find trusted travelers
+              </button>
+              <button
+                onClick={() => navigate('/messages')}
+                className="px-4 py-2 border border-slate-200 text-sm font-semibold rounded-lg hover:bg-slate-50 transition">
+                Go to messages
+              </button>
+            </div>
+          </div>
         </div>
-
-      </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
@@ -93,19 +111,29 @@ export default function SenderDashboard({ user }) {
               <div className="space-y-4">
                 {[
                   {
-                    name: 'Farhana Rahman', route: 'Dubai, UAE → Dhaka, Bangladesh', date: 'May 14',
-                    package: 'Documents and clothes', weight: '2.5 kg', area: 'Dhanmondi, Dhaka',
+                    name: 'Farhana Rahman',
+                    route: 'Dubai, UAE → Dhaka, Bangladesh',
+                    date: 'May 14',
+                    package: 'Documents and clothes',
+                    weight: '2.5 kg',
+                    dropoff: 'Dhanmondi, Dhaka',
                     note: 'Traveler accepted your request and asked you to confirm airport handoff timing in Dubai one day before departure.',
-                    status: 'Accepted',
+                    status: 'accepted',
                   },
                   {
-                    name: 'Tanvir Hossain', route: 'London, UK → Sylhet, Bangladesh', date: 'May 19',
-                    package: 'Prescription medicine', weight: '1.0 kg', area: '',
+                    name: 'Tanvir Hossain',
+                    route: 'London, UK → Sylhet, Bangladesh',
+                    date: 'May 19',
+                    package: 'Prescription medicine',
+                    weight: '1.0 kg',
+                    dropoff: '',
                     note: 'You already shared the prescription note and item photo. The traveler has not replied yet.',
-                    status: 'Waiting for reply',
+                    status: 'waiting',
                   },
                 ].map((req) => (
                   <div key={req.name} className="border border-slate-200 rounded-xl p-4">
+
+                    {/* Header */}
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center text-xs font-semibold text-slate-600">
@@ -116,34 +144,60 @@ export default function SenderDashboard({ user }) {
                           <p className="text-xs text-slate-400">{req.route} · {req.date}</p>
                         </div>
                       </div>
-                      <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                        req.status === 'Accepted'
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                          : 'bg-slate-100 text-slate-500'
+                      <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${
+                        req.status === 'accepted'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : 'bg-amber-50 text-amber-600 border-amber-200'
                       }`}>
-                        {req.status}
+                        {req.status === 'accepted' ? 'Accepted' : 'Waiting'}
                       </span>
                     </div>
+
+                    {/* Details grid */}
                     <div className="grid grid-cols-3 gap-2 mb-3">
-                      {[
-                        { label: 'Package', value: req.package },
-                        { label: 'Weight', value: req.weight },
-                        { label: 'Delivery area', value: req.area || 'Status: ' + req.status },
-                      ].map(({ label, value }) => (
-                        <div key={label} className="bg-slate-50 rounded-lg p-2">
-                          <p className="text-xs text-slate-400">{label}</p>
-                          <p className="text-xs font-medium text-slate-700 mt-0.5">{value}</p>
-                        </div>
-                      ))}
+                      <div className="bg-slate-50 rounded-lg p-2">
+                        <p className="text-xs text-slate-400">Package</p>
+                        <p className="text-xs font-medium text-slate-700 mt-0.5">{req.package}</p>
+                      </div>
+                      <div className="bg-slate-50 rounded-lg p-2">
+                        <p className="text-xs text-slate-400">Weight</p>
+                        <p className="text-xs font-medium text-slate-700 mt-0.5">{req.weight}</p>
+                      </div>
+                      <div className="bg-slate-50 rounded-lg p-2">
+                        <p className="text-xs text-slate-400">{req.status === 'accepted' ? 'Drop-off' : 'Status'}</p>
+                        <p className="text-xs font-medium text-slate-700 mt-0.5">
+                          {req.status === 'accepted' ? req.dropoff : 'Sent 1 hour ago'}
+                        </p>
+                      </div>
                     </div>
+
                     <p className="text-xs text-slate-500 mb-3">{req.note}</p>
+
+                    {/* Action buttons */}
                     <div className="flex gap-2">
-                      <button className="px-3 py-1.5 bg-emerald-600 text-white text-xs rounded-lg hover:bg-emerald-700">
-                        Message traveler
-                      </button>
-                      <button className="px-3 py-1.5 border border-slate-200 text-xs rounded-lg hover:bg-slate-50">
-                        View request
-                      </button>
+                      {req.status === 'accepted' ? (
+                        <>
+                          <button
+                            onClick={() => navigate('/messages')}
+                            className="px-3 py-1.5 border border-slate-200 text-xs font-medium rounded-lg hover:bg-slate-50 text-emerald-600 transition">
+                            Message traveler
+                          </button>
+                          <button className="px-3 py-1.5 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition">
+                            View request
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => navigate('/messages')}
+                            className="px-3 py-1.5 border border-slate-200 text-xs font-medium rounded-lg hover:bg-slate-50 text-emerald-600 transition">
+                            Open chat
+                          </button>
+                          <button className="px-3 py-1.5 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition">
+                            Edit request
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -198,7 +252,9 @@ export default function SenderDashboard({ user }) {
                   I can carry the package. Please send the pickup time in Dubai and the receiver name in Dhaka.
                 </p>
               </div>
-              <button className="w-full py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition">
+              <button
+                onClick={() => navigate('/messages')}
+                className="w-full py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition">
                 Continue chat
               </button>
             </div>
@@ -217,10 +273,34 @@ export default function SenderDashboard({ user }) {
                   </div>
                 ))}
               </div>
-              <button className="w-full py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition">
+              <button
+                onClick={() => navigate('/find-traveler')}
+                className="w-full py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition">
                 Send new request
               </button>
             </div>
+
+            {/* Quick actions */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-5">
+              <h3 className="font-semibold text-slate-800 mb-3">Quick actions</h3>
+              <div className="space-y-2">
+                {[
+                  { icon: <Search className="w-4 h-4" />, label: 'Find travelers', path: '/find-traveler' },
+                  { icon: <FileText className="w-4 h-4" />, label: 'My requests', path: '/my-requests' },
+                  { icon: <MessageSquare className="w-4 h-4" />, label: 'Messages', path: '/messages' },
+                ].map(({ icon, label, path }) => (
+                  <button
+                    key={label}
+                    onClick={() => navigate(path)}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 border border-slate-100 rounded-lg hover:bg-slate-50 transition text-sm text-slate-700"
+                  >
+                    <span className="text-slate-400">{icon}</span>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

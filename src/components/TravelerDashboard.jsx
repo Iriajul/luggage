@@ -25,8 +25,8 @@ export default function TravelerDashboard({ user }) {
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
           <a href="#" className="text-emerald-600 font-semibold">Dashboard</a>
           <a onClick={() => navigate('/my-trips')} className="cursor-pointer hover:text-emerald-600">My trips</a>
-          <a href="#" className="hover:text-emerald-600">Requests</a>
-          <a href="#" className="hover:text-emerald-600">Messages</a>
+          <a onClick={() => navigate('/requests')} className="cursor-pointer hover:text-emerald-600">Requests</a>
+          <a onClick={() => navigate('/messages')} className="cursor-pointer hover:text-emerald-600">Messages</a>
         </div>
 
         {/* Right — Button + Avatar */}
